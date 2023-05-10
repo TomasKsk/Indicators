@@ -5,5 +5,6 @@ Indicator functions in Javascript for graphs and trading data. The indicator inf
 
 ## Current indicators
 
-- Simple moving average
-- Exponential moving average
+- Simple moving average (SMA)
+- Exponential moving average (EMA)
+- Average True Range (ATR)
