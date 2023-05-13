@@ -8,3 +8,4 @@ Indicator functions in Javascript for graphs and trading data. The indicator inf
 - Simple moving average (SMA)
 - Exponential moving average (EMA)
 - Average True Range (ATR)
+- Moving average convergence/divergence (MACD)

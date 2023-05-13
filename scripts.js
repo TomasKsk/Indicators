@@ -21,7 +21,7 @@ console.log(sma(data,3));
 const ema = (arr, num) => {
     const k = 2 / (num + 1);
     return arr.map((_,a) => (a >= num) ? Number(((arr[a] * k) + (arr.slice(a - num, a)
-      .reduce((a,b) => a+b) / num) * (1 - k)).toFixed(3)) : null
+      .reduce((a,b) => a+b) / num) * (1 - k)).toFixed(4)) : null
     );
 };
 // Feed the function with an array[] (as arr in func) and the period length - number - of the exponential moving average (as num in the func)
@@ -35,11 +35,11 @@ console.log(sma(data,3));
 */
 
 
-// Average true range indicator in Javascript ES6 - ATR = (Previous ATR * (n - 1) + TR) / n
+// Average true range indicator in Javascript ES6 - ATR = (Previous ATR * (n - 1) + TR) / n !!! This function requires to have also the sma function listed above
 // Where: ATR = Average True Range n = number of periods or bars TR = True Range
 // The True Range for today is the greatest of the following [Today's high minus today's low, The absolute value of today's high minus yesterday's close, The absolute value of today's low minus yesterday's close]
 // Using a simple moving average for the results
-function atr(emaNum, priceLow, priceHigh, priceClose) {
+const atr = (emaNum, priceLow, priceHigh, priceClose) => {
     return sma(
         priceClose.map((_,a) => {
             return (a > 0) ? Math.max(
@@ -59,4 +59,26 @@ let data1 = [3,4,4.5,4,5.2,6,6.9,6.5]
 let data2 = [0.3,0,0.5,0,1.2,2,2.9,2.5]
 console.log(atr(3, data, data1, data2))
 // (8) [null, null, null, 3.4, 3.9, 4.4, 4.5, 4.9667]
+*/
+
+
+// Moving average convergence/divergence (MACD, or MAC-D) in Javascript ES6 - !!! This function requires to have also the ema function listed above
+// The MACD is a trend-following momentum indicator that shows the relationship between two exponential moving averages (EMAs) of a security’s price.
+// MACD = (n - slower Period EMA) − (n - faster Period EMA)
+const macd = (slow, fast, price) => {
+    let fastMa = ema(price, fast);
+    let slowMa = ema(price, slow);
+    return fastMa.map((_,a) => {
+    if (slowMa[a] !== null && fastMa[a] !== null) {
+        return Number((fastMa[a] - slowMa[a]).toFixed(4));
+    } return null;
+    });
+};
+// MACD requires 2 num lengths: slow(higher num), faster(lower num) for ema and a data array containing numbers. 
+// The function returns an array ([null,null,null,2,3,4...]) where ammounts of null == length of slow ema
+/*
+example:
+let data = [1,2,2.5,2,3.2,4,4.9,4.5]
+console.log(macd(5,2, data))
+// (8) [null, null, null, null, null, 0.7733, 1.0067, 0.77]
 */
