@@ -69,9 +69,9 @@ const macd = (slow, fast, price) => {
     let fastMa = ema(price, fast);
     let slowMa = ema(price, slow);
     return fastMa.map((_,a) => {
-    if (slowMa[a] !== null && fastMa[a] !== null) {
-        return Number((fastMa[a] - slowMa[a]).toFixed(4));
-    } return null;
+      return (slowMa[a] !== null && fastMa[a] !== null)
+      ? Number((fastMa[a] - slowMa[a]).toFixed(4))
+      : null;
     });
 };
 // MACD requires 2 num lengths: slow(higher num), faster(lower num) for ema and a data array containing numbers. 
