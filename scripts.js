@@ -5,6 +5,22 @@ const sma = (arr, num) => {
         .reduce((a,b) => a+b) / num).toFixed(4)) : null
     );
 };
+
+//Version - Improved readability
+const sma = (arr, num) => {
+    const result = Array(num).fill(null);
+    
+    for (let i = num - 1; i < arr.length; i++) {
+      const sum = arr.slice(i - num + 1, i + 1).reduce((a, b) => a + b);
+      const average = sum / num;
+      const roundedAverage = Number(average.toFixed(4));
+      result.push(roundedAverage);
+    }
+    
+    return result;
+};
+
+
 // Feed the function with an array[] (as arr in func) and the period length - number - of the simple moving average (as num in the func)
 // The function will return an array (ie: [null,null,null,2,3,4...]) where ammounts of null == length of sma
 /*
@@ -23,6 +39,22 @@ const ema = (arr, num) => {
     return arr.map((_,a) => (a >= num) ? Number(((arr[a] * k) + (arr.slice(a - num, a)
       .reduce((a,b) => a+b) / num) * (1 - k)).toFixed(4)) : null
     );
+};
+
+//Version - Improved readability
+const ema = (arr, num) => {
+    const k = 2 / (num + 1);
+    let emaPrev = arr.slice(0, num).reduce((a, b) => a + b) / num;
+    
+    return arr.map((_, a) => {
+      if (a < num) {
+        return null;
+      } else {
+        const emaCurrent = (arr[a] * k) + (emaPrev * (1 - k));
+        emaPrev = emaCurrent;
+        return Number(emaCurrent.toFixed(4));
+      }
+    });
 };
 // Feed the function with an array[] (as arr in func) and the period length - number - of the exponential moving average (as num in the func)
 // The function will return an array (ie: [null,null,null,2,3,4...]) where ammounts of null == length of ema
@@ -50,6 +82,25 @@ const atr = (emaNum, priceLow, priceHigh, priceClose) => {
             })
         , emaNum);
 };
+
+//Version - Improved readability
+const atr = (emaNum, priceLow, priceHigh, priceClose) => {
+    const trueRanges = priceClose.map((_, a) => {
+      if (a > 0) {
+        return Math.max(
+          priceHigh[a] - priceLow[a],
+          Math.abs(priceHigh[a] - priceClose[a - 1]),
+          Math.abs(priceClose[a - 1] - priceLow[a])
+        );
+      } else {
+        return priceHigh[a] - priceLow[a];
+      }
+    });
+  
+    const smaResult = sma(trueRanges, emaNum);
+    return [...Array(emaNum).fill(null), ...smaResult];
+};
+
 // The ATR requires 3 arrays - Low numbers, High numbers, mid numbers /or price low, price high, price close
 // The function returns an array ([null,null,null,2,3,4...]) where ammounts of null == length of sma
 /*
@@ -74,6 +125,24 @@ const macd = (slow, fast, price) => {
       : null;
     });
 };
+
+//Version - Improved readability
+const macd = (slow, fast, price) => {
+    const fastMa = ema(price, fast);
+    const slowMa = ema(price, slow);
+  
+    const result = [];
+  
+    for (let a = 0; a < fastMa.length; a++) {
+      if (slowMa[a] !== null && fastMa[a] !== null) {
+        result.push(Number((fastMa[a] - slowMa[a]).toFixed(4)));
+      } else {
+        result.push(null);
+      }
+    }
+  
+    return result;
+};
 // MACD requires 2 num lengths: slow(higher num), faster(lower num) for ema and a data array containing numbers. 
 // The function returns an array ([null,null,null,2,3,4...]) where ammounts of null == length of slow ema
 /*
@@ -81,4 +150,4 @@ example:
 let data = [1,2,2.5,2,3.2,4,4.9,4.5]
 console.log(macd(5,2, data))
 // (8) [null, null, null, null, null, 0.7733, 1.0067, 0.77]
-*/
+*/ 
