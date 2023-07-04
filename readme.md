@@ -7,10 +7,11 @@ Use All_indicators.js for all indicator functions, or use the separate indicator
 
 ## Current indicators
 
-| Indicator name                                      | Short name        | Usage                                      |
-| --------------------------------------------------- |:-----------------:| ------------------------------------------:|
-| Simple moving average | SMA | sma(arr, num); |
-| Exponential moving average | EMA | ema(arr, num); |
-| Average True Range | ATR | atr(emaNum, priceLow, priceHigh, priceClose); |
-| Moving average convergence/divergence | MACD | macd(slow, fast, price); |
-| Standard Deviation | stDev | stDev(length, price); |
+| Indicator name                                      | Short name        | Usage                                      | File name |
+| --------------------------------------------------- |:-----------------:|:------------------------------------------:| ---------:|
+| Simple moving average | SMA | sma(arr, num); | sma.js |
+| Exponential moving average | EMA | ema(arr, num); | ema.js |
+| Average True Range | ATR | atr(emaNum, priceLow, priceHigh, priceClose); | ATR.js |
+| Moving average convergence/divergence | MACD | macd(slow, fast, price); | MACD.js |
+| Standard Deviation | stDev | stDev(length, price); | stDev.js |
+| Didi Index | DIDI | didiIndex(short, mid, long, arr); | didi.js |
