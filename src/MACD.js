@@ -10,7 +10,7 @@ const macd = (slow, fast, price) => {
   
     for (let a = 0; a < fastMa.length; a++) {
       if (slowMa[a] !== null && fastMa[a] !== null) {
-        result.push(Number((fastMa[a] - slowMa[a]).toFixed(4)));
+        result.push(+((fastMa[a] - slowMa[a]).toFixed(4)));
       } else {
         result.push(null);
       }

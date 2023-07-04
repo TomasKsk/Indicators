@@ -7,8 +7,7 @@ const sma = (arr, num) => {
     for (let i = num - 1; i < arr.length; i++) {
       const sum = arr.slice(i - num + 1, i + 1).reduce((a, b) => a + b);
       const average = sum / num;
-      const roundedAverage = Number(average.toFixed(4));
-      result.push(roundedAverage);
+      result.push(+(average.toFixed(4)));
     }
     
     return result;

@@ -11,7 +11,7 @@ const ema = (arr, num) => {
       } else {
         const emaCurrent = (arr[a] * k) + (emaPrev * (1 - k));
         emaPrev = emaCurrent;
-        return Number(emaCurrent.toFixed(4));
+        return +(emaCurrent.toFixed(4));
       }
     });
 };

@@ -13,8 +13,7 @@ const sma = (arr, num) => {
     for (let i = num - 1; i < arr.length; i++) {
       const sum = arr.slice(i - num + 1, i + 1).reduce((a, b) => a + b);
       const average = sum / num;
-      const roundedAverage = Number(average.toFixed(4));
-      result.push(roundedAverage);
+      result.push(+(average.toFixed(4)));
     }
     
     return result;
@@ -52,7 +51,7 @@ const ema = (arr, num) => {
       } else {
         const emaCurrent = (arr[a] * k) + (emaPrev * (1 - k));
         emaPrev = emaCurrent;
-        return Number(emaCurrent.toFixed(4));
+        return +(emaCurrent.toFixed(4));
       }
     });
 };
@@ -61,8 +60,8 @@ const ema = (arr, num) => {
 /*
 example:
 let data = [1,2,2.5,2,3.2,4,4.9,4.5]
-console.log(sma(data,3));
-// (8) [null, null, null, 1.917, 2.683, 3.283, 3.983, 4.267]
+console.log(ema(data,3));
+// (8) [ null, null, null, 1.9167, 2.5583, 3.2792, 4.0896, 4.2948 ]
 
 */
 
@@ -135,7 +134,7 @@ const macd = (slow, fast, price) => {
   
     for (let a = 0; a < fastMa.length; a++) {
       if (slowMa[a] !== null && fastMa[a] !== null) {
-        result.push(Number((fastMa[a] - slowMa[a]).toFixed(4)));
+        result.push(+((fastMa[a] - slowMa[a]).toFixed(4)));
       } else {
         result.push(null);
       }
@@ -150,4 +149,37 @@ example:
 let data = [1,2,2.5,2,3.2,4,4.9,4.5]
 console.log(macd(5,2, data))
 // (8) [null, null, null, null, null, 0.7733, 1.0067, 0.77]
+*/ 
+
+
+
+
+// The Standard deviation (stDev) function calculates the square root of the calculated variance of a set of data.
+// It requires two number lengths: length for calculating the moving standard deviation,
+// and a data array containing numbers.
+const stDev = (length, price) => {
+    function deviation(array) {
+      const n = array.length;
+      const mean = array.reduce((a, b) => a + b) / n;
+      const sumSqrs = array.reduce((acc, x) => acc + Math.pow(x - mean, 2), 0);
+      return +(Math.sqrt(sumSqrs / n).toFixed(4));
+    }
+  
+    return price.map((_, a) => {
+      if (a >= length) {
+        const tempArr = price.slice(a - length, a);
+        return deviation(tempArr);
+      }
+      return null;
+    });
+};
+// The function returns an array where the number of null values at the beginning
+// is equal to the length specified for calculating the moving standard deviation.
+// The subsequent values in the array represent the calculated standard deviation for each
+// corresponding position in the data array, rounded to 4 decimal places.
+/*
+example:
+let data = [1,2,2.5,2,3.2,4,4.9,4.5]
+console.log(macd(5,2, data))
+// (8) [ null, null, null, null, 0.5449, 0.4918, 0.7529, 1.0662 ]
 */ 
