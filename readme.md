@@ -7,7 +7,7 @@ Use scripts.js for all indicators, or use the separate indicators (be aware that
 
 ## Current indicators
 
-- Simple moving average (SMA)
-- Exponential moving average (EMA)
-- Average True Range (ATR)
-- Moving average convergence/divergence (MACD)
+- Simple moving average (SMA)                   -  sma(arr, num);
+- Exponential moving average (EMA)              -  ema(arr, num);
+- Average True Range (ATR)                      -  atr(emaNum, priceLow, priceHigh, priceClose);
+- Moving average convergence/divergence (MACD)  -  macd(slow, fast, price);

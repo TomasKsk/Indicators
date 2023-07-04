@@ -1,6 +1,6 @@
 // Simple moving average indicator in Javascript ES6
 // A simple moving average (SMA), is calculated by taking the arithmetic mean of a given set of values over a specified period (A1 + A2 + ... + An) / n
-const sma = (arr, num) => {
+const sma2 = (arr, num) => {
     return arr.map((_,a) => (a >= num) ? Number((arr.slice(a - num, a)
         .reduce((a,b) => a+b) / num).toFixed(4)) : null
     );
@@ -34,7 +34,7 @@ console.log(sma(data,3));
 
 // exponential moving average indicator in Javascript ES6
 // The EMA is a moving average that places a greater weight and significance on the most recent data points. (price(t) * k) + (EMA(y) * (1 – k)) k - alpha
-const ema = (arr, num) => {
+const ema2 = (arr, num) => {
     const k = 2 / (num + 1);
     return arr.map((_,a) => (a >= num) ? Number(((arr[a] * k) + (arr.slice(a - num, a)
       .reduce((a,b) => a+b) / num) * (1 - k)).toFixed(4)) : null
@@ -71,7 +71,7 @@ console.log(sma(data,3));
 // Where: ATR = Average True Range n = number of periods or bars TR = True Range
 // The True Range for today is the greatest of the following [Today's high minus today's low, The absolute value of today's high minus yesterday's close, The absolute value of today's low minus yesterday's close]
 // Using a simple moving average for the results
-const atr = (emaNum, priceLow, priceHigh, priceClose) => {
+const atr2 = (emaNum, priceLow, priceHigh, priceClose) => {
     return sma(
         priceClose.map((_,a) => {
             return (a > 0) ? Math.max(
@@ -116,7 +116,7 @@ console.log(atr(3, data, data1, data2))
 // Moving average convergence/divergence (MACD, or MAC-D) in Javascript ES6 - !!! This function requires to have also the ema function listed above
 // The MACD is a trend-following momentum indicator that shows the relationship between two exponential moving averages (EMAs) of a security’s price.
 // MACD = (n - slower Period EMA) − (n - faster Period EMA)
-const macd = (slow, fast, price) => {
+const macd2 = (slow, fast, price) => {
     let fastMa = ema(price, fast);
     let slowMa = ema(price, slow);
     return fastMa.map((_,a) => {
